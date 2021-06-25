@@ -7,18 +7,13 @@
     "build": "next build",
     "start": "next start",
     "commit": "cz",
+    "husky-lint": "lint-staged",
     "pretty": "prettier --write *",
     "lint": "eslint '**/*.{js,jsx}' --fix",
     "style": "stylelint '**/*.{css,scss}' --fix",
     "format": "npm run pretty && npm run lint && npm run style",
     "test": "jest --runInBand",
     "test:new-snapshot": "npm run test -- -u"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
-    }
   },
   "lint-staged": {
     "src/**/*.{js,jsx,css,scss}": [
