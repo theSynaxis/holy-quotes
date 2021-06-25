@@ -1,0 +1,38 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true,
+        "jest/globals": true
+    },
+    "extends": [
+      "airbnb",
+      "plugin:react/recommended",
+      "plugin:prettier/recommended"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "prettier",
+        "jest"  
+    ],
+    "rules": {
+      "jsx-quotes": ["error", "prefer-single"],
+      "comma-dangle": ["error", "only-multiline"],
+      "camelcase": ["error", {"ignoreDestructuring": true, "properties": "never"}],
+      "react/prop-types": [0],
+      "react/button-has-type": [0],
+      "react/jsx-one-expression-per-line": [0],
+      "prettier/prettier": "error"
+    }
+}
