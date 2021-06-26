@@ -16,7 +16,7 @@ module.exports = {
   test: {
     client: 'pg',
     connection: {
-      database: 'TestSynaxisQuotes',
+      database: 'test_db',
       hostname: 'localhost',
     },
     migrations: {
