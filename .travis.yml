@@ -8,3 +8,5 @@ before_script:
 script:
   - npm install
   - npm run coveralls
+notifications:
+  slack: synaxisworkspace:Xw0MSErrrNIbV0CauFzaPHho
