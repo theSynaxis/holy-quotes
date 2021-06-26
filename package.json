@@ -13,7 +13,9 @@
     "style": "stylelint '**/*.{css,scss}' --fix",
     "format": "npm run pretty && npm run lint && npm run style",
     "test": "jest --runInBand",
-    "test:new-snapshot": "npm run test -- -u"
+    "test:cov": "jest --runInBand --coverage",
+    "test:new-snapshot": "npm run test -- -u",
+    "coveralls": "npm run test:cov && cat ./coverage/lcov.info | coveralls"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,css,scss}": [
@@ -21,12 +23,17 @@
     ]
   },
   "dependencies": {
+    "express-graphql": "^0.12.0",
+    "graphql": "^15.5.1",
+    "knex": "^0.95.6",
     "next": "11.0.1",
+    "pg": "^8.6.0",
     "react": "17.0.2",
     "react-dom": "17.0.2"
   },
   "devDependencies": {
     "commitizen": "^4.2.4",
+    "coveralls": "^3.1.0",
     "cz-conventional-changelog": "^3.2.0",
     "eslint": "^7.29.0",
     "eslint-config-airbnb": "^18.2.1",
