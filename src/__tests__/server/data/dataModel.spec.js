@@ -46,7 +46,14 @@ describe('Data Access Model Layer', () => {
 
   describe('POST data', () => {
     test('addOne: success', async () => {
-      const newAuthor = {};
+      const newAuthor = {
+        name: 'Moses the Godseer',
+        title: 'Prophet',
+        born: '1689',
+        died: '1569',
+        is_bc: true,
+        feast_day: 'September 4',
+      };
       const author = await addOne('authors', newAuthor);
       expect(author.id).toEqual(2);
     });
