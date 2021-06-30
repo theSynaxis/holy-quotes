@@ -4,6 +4,8 @@ const {
   getAuthor,
   addAuthor,
   updateAuthor,
+  deleteAuthor,
+  restoreAuthor,
 } = require('../../../../server/api/authors/authorsModel');
 
 describe('Authors Data Model Functions', () => {
@@ -319,6 +321,52 @@ describe('Authors Data Model Functions', () => {
             'column "best_friend" of relation "authors" does not exist'
           );
         });
+      });
+    });
+  });
+
+  describe('deleteAuthor', () => {
+    test('deleteAuthor: Success', async () => {
+      const id = 2;
+      const author = await deleteAuthor(id);
+      expect(author.is_deleted).toEqual(true);
+      expect(author.created_at).not.toEqual(author.modified_at);
+    });
+
+    describe('deleteAuthor: Failures', () => {
+      test('deleteAuthor: Already Deleted failure', async () => {
+        const id = 2;
+        await expect(() => deleteAuthor(id)).rejects.toThrow(
+          'Author Already Deleted'
+        );
+      });
+
+      test('deleteAuthor: Missing ID failure', async () => {
+        await expect(() => deleteAuthor()).rejects.toThrow('Missing Author ID');
+      });
+    });
+  });
+
+  describe('restoreAuthor', () => {
+    test('restoreAuthor: Success', async () => {
+      const id = 2;
+      const author = await restoreAuthor(id);
+      expect(author.is_deleted).toEqual(false);
+      expect(author.created_at).not.toEqual(author.modified_at);
+    });
+
+    describe('restoreAuthor: Failures', () => {
+      test('restoreAuthor: Not Deleted failure', async () => {
+        const id = 2;
+        await expect(() => restoreAuthor(id)).rejects.toThrow(
+          'Author Not Deleted'
+        );
+      });
+
+      test('restoreAuthor: Missing ID failure', async () => {
+        await expect(() => restoreAuthor()).rejects.toThrow(
+          'Missing Author ID'
+        );
       });
     });
   });

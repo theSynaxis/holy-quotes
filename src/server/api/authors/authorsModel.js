@@ -1,4 +1,11 @@
-const { findAll, findOne, addOne, updateOne } = require('../../data/dataModel');
+const {
+  findAll,
+  findOne,
+  addOne,
+  updateOne,
+  deleteOne,
+  restoreOne,
+} = require('../../data/dataModel');
 const { verifyAuthorInfo } = require('./authorFunctions');
 
 function getAuthors() {
@@ -47,9 +54,27 @@ async function updateAuthor(author) {
   return updatedAuthor;
 }
 
+async function deleteAuthor(id) {
+  const author = await getAuthor(id);
+  if (author.is_deleted) {
+    throw new Error('Author Already Deleted');
+  }
+  return deleteOne('authors', id);
+}
+
+async function restoreAuthor(id) {
+  const author = await getAuthor(id);
+  if (!author.is_deleted) {
+    throw new Error('Author Not Deleted');
+  }
+  return restoreOne('authors', id);
+}
+
 module.exports = {
   getAuthors,
   getAuthor,
   addAuthor,
   updateAuthor,
+  deleteAuthor,
+  restoreAuthor,
 };
