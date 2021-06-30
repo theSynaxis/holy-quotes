@@ -46,6 +46,7 @@ async function updateOne(database, item) {
   await db(database)
     .where({ id })
     .update(item)
+    .update('modified_at', db.fn.now())
     .then(() => {});
   return findOne(database, id);
 }

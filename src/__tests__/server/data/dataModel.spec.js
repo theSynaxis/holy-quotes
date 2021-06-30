@@ -74,6 +74,7 @@ describe('Data Access Model Layer', () => {
       };
       const author = await updateOne('authors', updatedAuthor);
       expect(author.name).toEqual(updatedAuthor.name);
+      expect(author.created_at).not.toEqual(author.modified_at);
     });
 
     test('updateOne: Missing database failure', async () => {
