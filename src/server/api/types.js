@@ -7,7 +7,7 @@ const {
 const { GraphQLDateTime } = require('graphql-iso-date');
 
 const AuthorType = new GraphQLObjectType({
-  name: 'Author Type',
+  name: 'AuthorType',
   fields: () => ({
     id: { type: GraphQLID },
     name: { type: GraphQLString },

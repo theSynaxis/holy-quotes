@@ -15,7 +15,7 @@ describe('Author Queries', () => {
     test('getAuthors Query: unseeded', async () => {
       const authors = await getAuthors.resolve();
       expect(getAuthors.name).toEqual('getAuthors Query');
-      expect(getAuthors.type.toString()).toEqual('[Author Type]');
+      expect(getAuthors.type.toString()).toEqual('[AuthorType]');
       expect(getAuthors.args).toEqual({});
       expect(authors).toEqual([]);
     });
@@ -50,7 +50,7 @@ describe('Author Queries', () => {
     test('getAuthor Query: unseeded', async () => {
       const args = { id: 1 };
       expect(getAuthor.name).toEqual('getAuthor Query');
-      expect(getAuthor.type.toString()).toEqual('Author Type');
+      expect(getAuthor.type.toString()).toEqual('AuthorType');
       expect(getAuthor.args.id.type).toEqual(GraphQLID);
       await expect(() => getAuthor.resolve(args)).rejects.toThrow(
         'Author Does Not Exist'

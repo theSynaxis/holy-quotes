@@ -6,7 +6,7 @@ describe('GraphQL Types', () => {
   describe('Author Type', () => {
     test('Author Type', async () => {
       const fields = await AuthorType.getFields();
-      expect(AuthorType.name).toEqual('Author Type');
+      expect(AuthorType.name).toEqual('AuthorType');
       expect(fields.id.type).toEqual(GraphQLID);
       expect(fields.name.type).toEqual(GraphQLString);
       expect(fields.title.type).toEqual(GraphQLString);
