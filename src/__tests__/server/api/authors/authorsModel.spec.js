@@ -56,12 +56,12 @@ describe('Authors Data Model Functions', () => {
         title: 'Prophet',
         born: '1689',
         died: '1569',
-        is_bc: true,
-        feast_day: 'September 4',
+        isBC: true,
+        feastDay: 'September 4',
         life: null,
-        is_deleted: false,
-        created_at: expect.any(Date),
-        modified_at: expect.any(Date),
+        isDeleted: false,
+        createdAt: expect.any(Date),
+        modifiedAt: expect.any(Date),
       });
     });
 
@@ -168,9 +168,9 @@ describe('Authors Data Model Functions', () => {
         feast_day: 'September 4',
         best_friend: 'Bob?',
       };
-      const author = await addAuthor(newAuthor);
-      expect(author.toString()).toContain(
-        'column "best_friend" of relation "authors" does not exist'
+
+      await expect(addAuthor(newAuthor)).rejects.toThrow(
+        'Error Adding New Author'
       );
     });
 

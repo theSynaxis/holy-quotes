@@ -1,5 +1,6 @@
 const {
   verifyAuthorInfo,
+  transformAuthorData,
 } = require('../../../../server/api/authors/authorFunctions');
 
 describe('Author Business Logic Helper Functions', () => {
@@ -95,6 +96,58 @@ describe('Author Business Logic Helper Functions', () => {
           'Missing Author Feast Day'
         );
       });
+    });
+  });
+
+  describe('transformAuthorData', () => {
+    test('transformAuthorData: GraphQL Schema to Database Schema', async () => {
+      const author = {
+        name: 'Name',
+        title: 'Title',
+        born: 'Born',
+        died: 'Died',
+        isBC: true,
+        feastDay: 'Feast Day',
+        isDeleted: false,
+        createdAt: new Date(Date.now()),
+        modifiedAt: new Date(Date.now()),
+      };
+      const result = await transformAuthorData(author);
+      expect(result).not.toEqual(author);
+      expect(result.name).toEqual(author.name);
+      expect(result.title).toEqual(author.title);
+      expect(result.born).toEqual(author.born);
+      expect(result.died).toEqual(author.died);
+      expect(result.is_bc).toEqual(author.isBC);
+      expect(result.feast_day).toEqual(author.feastDay);
+      expect(result.is_deleted).toEqual(author.isDeleted);
+      expect(result.created_at).toEqual(author.createdAt);
+      expect(result.modified_at).toEqual(author.modifiedAt);
+    });
+
+    test('transformAuthorData: Database Schema to GraphQL Schema', async () => {
+      const author = {
+        name: 'Name',
+        title: 'Title',
+        born: 'Born',
+        died: 'Died',
+        is_bc: true,
+        feast_day: 'Feast Day',
+        is_deleted: false,
+        created_at: new Date(Date.now()),
+        modified_at: new Date(Date.now()),
+      };
+      const result = await transformAuthorData(author);
+      expect(result).not.toEqual(author);
+      expect(result.name).toEqual(author.name);
+      expect(result.title).toEqual(author.title);
+      expect(result.born).toEqual(author.born);
+      expect(result.died).toEqual(author.died);
+      expect(result.is_bc).toEqual(author.isBC);
+      expect(result.feast_day).toEqual(author.feastDay);
+      expect(result.is_deleted).toEqual(author.isDeleted);
+      expect(result.created_at).toEqual(author.createdAt);
+      expect(result.modified_at).toEqual(author.modifiedAt);
     });
   });
 });

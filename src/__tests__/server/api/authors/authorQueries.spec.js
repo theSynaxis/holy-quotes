@@ -1,4 +1,3 @@
-const { GraphQLID } = require('graphql');
 const knex = require('../../../../server/data/dbConfig');
 const {
   getAuthors,
@@ -51,7 +50,7 @@ describe('Author Queries', () => {
       const args = { id: 1 };
       expect(getAuthor.name).toEqual('getAuthor Query');
       expect(getAuthor.type.toString()).toEqual('AuthorType');
-      expect(getAuthor.args.id.type).toEqual(GraphQLID);
+      expect(getAuthor.args.id.type.toString()).toEqual('ID!');
       await expect(() => getAuthor.resolve(args)).rejects.toThrow(
         'Author Does Not Exist'
       );

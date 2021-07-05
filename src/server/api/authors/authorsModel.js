@@ -6,7 +6,7 @@ const {
   deleteOne,
   restoreOne,
 } = require('../../data/dataModel');
-const { verifyAuthorInfo } = require('./authorFunctions');
+const { verifyAuthorInfo, transformAuthorData } = require('./authorFunctions');
 
 function getAuthors() {
   return findAll('authors');
@@ -26,7 +26,11 @@ async function getAuthor(id) {
 }
 
 async function addAuthor(author) {
-  const verifiedAuthor = await verifyAuthorInfo(author);
+  let transformedAuthor = author;
+  if (author.feastDay) {
+    transformedAuthor = await transformAuthorData(author);
+  }
+  const verifiedAuthor = await verifyAuthorInfo(transformedAuthor);
   const newAuthor = await addOne('authors', verifiedAuthor)
     .then()
     .catch((err) => {
@@ -35,7 +39,11 @@ async function addAuthor(author) {
       }
       return err;
     });
-  return newAuthor;
+  if (newAuthor.name === 'Error') {
+    throw new Error('Error Adding New Author');
+  }
+  const retransformedAuthor = await transformAuthorData(newAuthor);
+  return retransformedAuthor;
 }
 
 async function updateAuthor(author) {

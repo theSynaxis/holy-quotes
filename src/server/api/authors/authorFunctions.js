@@ -20,6 +20,39 @@ async function verifyAuthorInfo(author) {
   return author;
 }
 
+function transformAuthorData(author) {
+  if (author.feastDay) {
+    const transformedAuthor = {
+      name: author.name,
+      title: author.title,
+      born: author.born,
+      died: author.died,
+      is_bc: author.isBC,
+      feast_day: author.feastDay,
+      life: author.life,
+      is_deleted: author.isDeleted,
+      created_at: author.createdAt,
+      modified_at: author.modifiedAt,
+    };
+    return transformedAuthor;
+  }
+  const transformedAuthor = {
+    id: author.id,
+    name: author.name,
+    title: author.title,
+    born: author.born,
+    died: author.died,
+    isBC: author.is_bc,
+    feastDay: author.feast_day,
+    life: author.life,
+    isDeleted: author.is_deleted,
+    createdAt: author.created_at,
+    modifiedAt: author.modified_at,
+  };
+  return transformedAuthor;
+}
+
 module.exports = {
   verifyAuthorInfo,
+  transformAuthorData,
 };
