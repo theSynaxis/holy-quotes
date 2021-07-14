@@ -8,7 +8,7 @@ module.exports = {
   args: {
     id: { type: new GraphQLNonNull(GraphQLID) },
   },
-  resolve(args) {
+  resolve(parent, args) {
     return getAuthor(args.id);
   },
 };

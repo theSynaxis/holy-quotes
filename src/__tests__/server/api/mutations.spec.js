@@ -6,5 +6,6 @@ describe('GraphQL Mutations', () => {
 
     expect(mutations.name).toEqual('Mutations');
     expect(fields.addAuthor.name).toEqual('addAuthor');
+    expect(fields.updateAuthor.name).toEqual('updateAuthor');
   });
 });

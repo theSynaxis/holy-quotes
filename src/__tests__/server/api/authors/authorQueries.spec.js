@@ -51,7 +51,7 @@ describe('Author Queries', () => {
       expect(getAuthor.name).toEqual('getAuthor Query');
       expect(getAuthor.type.toString()).toEqual('AuthorType');
       expect(getAuthor.args.id.type.toString()).toEqual('ID!');
-      await expect(() => getAuthor.resolve(args)).rejects.toThrow(
+      await expect(() => getAuthor.resolve(null, args)).rejects.toThrow(
         'Author Does Not Exist'
       );
     });
@@ -59,7 +59,7 @@ describe('Author Queries', () => {
     test('getAuthor Query: seeded', async () => {
       await knex.seed.run();
       const args = { id: 1 };
-      const author = await getAuthor.resolve(args);
+      const author = await getAuthor.resolve(null, args);
       expect(author).toEqual({
         id: 1,
         name: 'Kosmas Aitolos',
@@ -77,7 +77,7 @@ describe('Author Queries', () => {
 
     test('getAuthor: Missing ID failure', async () => {
       const args = {};
-      await expect(() => getAuthor.resolve(args)).rejects.toThrow(
+      await expect(() => getAuthor.resolve(null, args)).rejects.toThrow(
         'Missing Author ID'
       );
     });

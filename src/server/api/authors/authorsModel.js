@@ -6,7 +6,11 @@ const {
   deleteOne,
   restoreOne,
 } = require('../../data/dataModel');
-const { verifyAuthorInfo, transformAuthorData } = require('./authorFunctions');
+const {
+  verifyAuthorInfo,
+  GqlToDBAuthorData,
+  DBToGqlAuthorData,
+} = require('./authorFunctions');
 
 function getAuthors() {
   return findAll('authors');
@@ -28,7 +32,7 @@ async function getAuthor(id) {
 async function addAuthor(author) {
   let transformedAuthor = author;
   if (author.feastDay) {
-    transformedAuthor = await transformAuthorData(author);
+    transformedAuthor = await GqlToDBAuthorData(author);
   }
   const verifiedAuthor = await verifyAuthorInfo(transformedAuthor);
   const newAuthor = await addOne('authors', verifiedAuthor)
@@ -42,7 +46,7 @@ async function addAuthor(author) {
   if (newAuthor.name === 'Error') {
     throw new Error('Error Adding New Author');
   }
-  const retransformedAuthor = await transformAuthorData(newAuthor);
+  const retransformedAuthor = await DBToGqlAuthorData(newAuthor);
   return retransformedAuthor;
 }
 
@@ -50,7 +54,11 @@ async function updateAuthor(author) {
   if (!author.id) {
     throw new Error('Missing Author ID');
   }
-  const verifiedAuthor = await verifyAuthorInfo(author);
+  let transformedAuthor = author;
+  if (author.feastDay) {
+    transformedAuthor = await GqlToDBAuthorData(author);
+  }
+  const verifiedAuthor = await verifyAuthorInfo(transformedAuthor);
   const updatedAuthor = await updateOne('authors', verifiedAuthor)
     .then()
     .catch((err) => {
@@ -59,7 +67,11 @@ async function updateAuthor(author) {
       }
       return err;
     });
-  return updatedAuthor;
+  if (updatedAuthor.name === 'error') {
+    throw new Error('Error Updating Author');
+  }
+  const retransformedAuthor = await DBToGqlAuthorData(updatedAuthor);
+  return retransformedAuthor;
 }
 
 async function deleteAuthor(id) {

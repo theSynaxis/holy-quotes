@@ -187,7 +187,7 @@ describe('Authors Data Model Functions', () => {
         };
         const author = await updateAuthor(updatedAuthor);
         expect(author.name).toEqual(updatedAuthor.name);
-        expect(author.created_at).not.toEqual(author.modified_at);
+        expect(author.createdAt).not.toEqual(author.modifiedAt);
       });
 
       describe('updateAuthor: Failures', () => {
@@ -306,8 +306,8 @@ describe('Authors Data Model Functions', () => {
         });
 
         test('updateAuthor: Incorrect Author Object failure', async () => {
-          const newAuthor = {
-            id: 2,
+          const author = {
+            id: 1,
             name: 'Moses the Godseer',
             title: 'Prophet',
             born: '1689',
@@ -316,9 +316,9 @@ describe('Authors Data Model Functions', () => {
             feast_day: 'September 4',
             best_friend: 'Bob?',
           };
-          const author = await updateAuthor(newAuthor);
-          expect(author.toString()).toContain(
-            'column "best_friend" of relation "authors" does not exist'
+
+          await expect(updateAuthor(author)).rejects.toThrow(
+            'Error Updating Author'
           );
         });
       });

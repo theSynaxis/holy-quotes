@@ -1,6 +1,7 @@
 const {
   verifyAuthorInfo,
-  transformAuthorData,
+  GqlToDBAuthorData,
+  DBToGqlAuthorData,
 } = require('../../../../server/api/authors/authorFunctions');
 
 describe('Author Business Logic Helper Functions', () => {
@@ -99,8 +100,8 @@ describe('Author Business Logic Helper Functions', () => {
     });
   });
 
-  describe('transformAuthorData', () => {
-    test('transformAuthorData: GraphQL Schema to Database Schema', async () => {
+  describe('Transform Author Data', () => {
+    test('GqlToDBAuthorData: GraphQL Schema to Database Schema', async () => {
       const author = {
         name: 'Name',
         title: 'Title',
@@ -112,7 +113,7 @@ describe('Author Business Logic Helper Functions', () => {
         createdAt: new Date(Date.now()),
         modifiedAt: new Date(Date.now()),
       };
-      const result = await transformAuthorData(author);
+      const result = await GqlToDBAuthorData(author);
       expect(result).not.toEqual(author);
       expect(result.name).toEqual(author.name);
       expect(result.title).toEqual(author.title);
@@ -125,7 +126,34 @@ describe('Author Business Logic Helper Functions', () => {
       expect(result.modified_at).toEqual(author.modifiedAt);
     });
 
-    test('transformAuthorData: Database Schema to GraphQL Schema', async () => {
+    test('GqlToDBAuthorData: GraphQL Schema to Database Schema with ID', async () => {
+      const author = {
+        id: 1,
+        name: 'Name',
+        title: 'Title',
+        born: 'Born',
+        died: 'Died',
+        isBC: true,
+        feastDay: 'Feast Day',
+        isDeleted: false,
+        createdAt: new Date(Date.now()),
+        modifiedAt: new Date(Date.now()),
+      };
+      const result = await GqlToDBAuthorData(author);
+      expect(result).not.toEqual(author);
+      expect(result.id).toEqual(author.id);
+      expect(result.name).toEqual(author.name);
+      expect(result.title).toEqual(author.title);
+      expect(result.born).toEqual(author.born);
+      expect(result.died).toEqual(author.died);
+      expect(result.is_bc).toEqual(author.isBC);
+      expect(result.feast_day).toEqual(author.feastDay);
+      expect(result.is_deleted).toEqual(author.isDeleted);
+      expect(result.created_at).toEqual(author.createdAt);
+      expect(result.modified_at).toEqual(author.modifiedAt);
+    });
+
+    test('DBToGqlAuthorData: Database Schema to GraphQL Schema', async () => {
       const author = {
         name: 'Name',
         title: 'Title',
@@ -137,7 +165,7 @@ describe('Author Business Logic Helper Functions', () => {
         created_at: new Date(Date.now()),
         modified_at: new Date(Date.now()),
       };
-      const result = await transformAuthorData(author);
+      const result = await DBToGqlAuthorData(author);
       expect(result).not.toEqual(author);
       expect(result.name).toEqual(author.name);
       expect(result.title).toEqual(author.title);

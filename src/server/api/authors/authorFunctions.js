@@ -11,7 +11,7 @@ async function verifyAuthorInfo(author) {
   if (!author.died) {
     throw new Error('Missing Author Died Date');
   }
-  if (!author.is_bc) {
+  if (author.is_bc === (null || undefined)) {
     throw new Error('Missing Author BC Boolean');
   }
   if (!author.feast_day) {
@@ -20,9 +20,11 @@ async function verifyAuthorInfo(author) {
   return author;
 }
 
-function transformAuthorData(author) {
-  if (author.feastDay) {
-    const transformedAuthor = {
+function GqlToDBAuthorData(author) {
+  let transformedAuthor;
+  if (author.id) {
+    transformedAuthor = {
+      id: author.id,
       name: author.name,
       title: author.title,
       born: author.born,
@@ -36,6 +38,22 @@ function transformAuthorData(author) {
     };
     return transformedAuthor;
   }
+  transformedAuthor = {
+    name: author.name,
+    title: author.title,
+    born: author.born,
+    died: author.died,
+    is_bc: author.isBC,
+    feast_day: author.feastDay,
+    life: author.life,
+    is_deleted: author.isDeleted,
+    created_at: author.createdAt,
+    modified_at: author.modifiedAt,
+  };
+  return transformedAuthor;
+}
+
+function DBToGqlAuthorData(author) {
   const transformedAuthor = {
     id: author.id,
     name: author.name,
@@ -54,5 +72,6 @@ function transformAuthorData(author) {
 
 module.exports = {
   verifyAuthorInfo,
-  transformAuthorData,
+  GqlToDBAuthorData,
+  DBToGqlAuthorData,
 };
