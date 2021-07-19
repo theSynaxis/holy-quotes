@@ -13,7 +13,11 @@ const {
 } = require('./authorFunctions');
 
 function getAuthors() {
-  return findAll('authors');
+  return findAll('authors').then((res) => {
+    return res.map((author) => {
+      return DBToGqlAuthorData(author);
+    });
+  });
 }
 
 async function getAuthor(id) {
@@ -22,7 +26,10 @@ async function getAuthor(id) {
   }
 
   const author = await findOne('authors', id)
-    .then((res) => res)
+    .then(async (res) => {
+      const transformedAuthor = await DBToGqlAuthorData(res);
+      return transformedAuthor;
+    })
     .catch(() => {
       throw new Error('Author Does Not Exist');
     });
@@ -76,15 +83,18 @@ async function updateAuthor(author) {
 
 async function deleteAuthor(id) {
   const author = await getAuthor(id);
-  if (author.is_deleted) {
+  if (author.isDeleted) {
     throw new Error('Author Already Deleted');
   }
-  return deleteOne('authors', id);
+  return deleteOne('authors', id).then(async (res) => {
+    const transformedAuthor = await DBToGqlAuthorData(res);
+    return transformedAuthor;
+  });
 }
 
 async function restoreAuthor(id) {
   const author = await getAuthor(id);
-  if (!author.is_deleted) {
+  if (!author.isDeleted) {
     throw new Error('Author Not Deleted');
   }
   return restoreOne('authors', id);

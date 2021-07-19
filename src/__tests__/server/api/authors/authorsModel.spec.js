@@ -329,8 +329,8 @@ describe('Authors Data Model Functions', () => {
     test('deleteAuthor: Success', async () => {
       const id = 2;
       const author = await deleteAuthor(id);
-      expect(author.is_deleted).toEqual(true);
-      expect(author.created_at).not.toEqual(author.modified_at);
+      expect(author.isDeleted).toEqual(true);
+      expect(author.createdAt).not.toEqual(author.modifiedAt);
     });
 
     describe('deleteAuthor: Failures', () => {

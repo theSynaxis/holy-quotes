@@ -1,10 +1,15 @@
 const { GraphQLObjectType } = require('graphql');
-const { addAuthor, updateAuthor } = require('./authors/mutations');
+const {
+  addAuthor,
+  updateAuthor,
+  deleteAuthor,
+} = require('./authors/mutations');
 
 module.exports = new GraphQLObjectType({
   name: 'Mutations',
   fields: {
     addAuthor,
     updateAuthor,
+    deleteAuthor,
   },
 });

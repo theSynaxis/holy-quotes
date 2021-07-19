@@ -2,6 +2,7 @@ const knex = require('../../../../server/data/dbConfig');
 const {
   addAuthor,
   updateAuthor,
+  deleteAuthor,
 } = require('../../../../server/api/authors/mutations');
 
 describe('Author Mutations', () => {
@@ -83,6 +84,17 @@ describe('Author Mutations', () => {
         modifiedAt: expect.any(Date),
         isDeleted: false,
       });
+    });
+
+    test('deleteAuthor Mutation', async () => {
+      const author = {
+        id: 1,
+      };
+      const result = await deleteAuthor.resolve(null, author);
+      expect(deleteAuthor.name).toEqual('deleteAuthor Mutation');
+      expect(deleteAuthor.args.id.type.toString()).toEqual('ID!');
+      expect(deleteAuthor.type.toString()).toEqual('AuthorType');
+      expect(result.isDeleted).toEqual(true);
     });
 
     afterAll(async () => {
