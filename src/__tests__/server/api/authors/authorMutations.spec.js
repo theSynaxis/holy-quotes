@@ -3,6 +3,7 @@ const {
   addAuthor,
   updateAuthor,
   deleteAuthor,
+  restoreAuthor,
 } = require('../../../../server/api/authors/mutations');
 
 describe('Author Mutations', () => {
@@ -95,6 +96,17 @@ describe('Author Mutations', () => {
       expect(deleteAuthor.args.id.type.toString()).toEqual('ID!');
       expect(deleteAuthor.type.toString()).toEqual('AuthorType');
       expect(result.isDeleted).toEqual(true);
+    });
+
+    test('restoreAuthor Mutation', async () => {
+      const author = {
+        id: 1,
+      };
+      const result = await restoreAuthor.resolve(null, author);
+      expect(restoreAuthor.name).toEqual('restoreAuthor Mutation');
+      expect(restoreAuthor.args.id.type.toString()).toEqual('ID!');
+      expect(restoreAuthor.type.toString()).toEqual('AuthorType');
+      expect(result.isDeleted).toEqual(false);
     });
 
     afterAll(async () => {

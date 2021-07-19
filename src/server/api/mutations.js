@@ -3,6 +3,7 @@ const {
   addAuthor,
   updateAuthor,
   deleteAuthor,
+  restoreAuthor,
 } = require('./authors/mutations');
 
 module.exports = new GraphQLObjectType({
@@ -11,5 +12,6 @@ module.exports = new GraphQLObjectType({
     addAuthor,
     updateAuthor,
     deleteAuthor,
+    restoreAuthor,
   },
 });

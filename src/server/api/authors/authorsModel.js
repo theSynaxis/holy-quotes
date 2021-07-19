@@ -97,7 +97,10 @@ async function restoreAuthor(id) {
   if (!author.isDeleted) {
     throw new Error('Author Not Deleted');
   }
-  return restoreOne('authors', id);
+  return restoreOne('authors', id).then(async (res) => {
+    const transformedAuthor = await DBToGqlAuthorData(res);
+    return transformedAuthor;
+  });
 }
 
 module.exports = {
