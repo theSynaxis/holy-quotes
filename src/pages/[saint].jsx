@@ -1,7 +1,4 @@
 import React from 'react';
-import Head from 'next/head';
-// import Image from 'next/image';
-// import styles from '../styles/Home.module.css';
 
 const saint = {
   id: '1',
@@ -17,43 +14,14 @@ const saint = {
   isDeleted: false,
 };
 
-export default function Home() {
+export default function Saint() {
   return (
     <div>
-      <Head>
-        <title>The Synaxis Holy Quotes App</title>
-        <meta
-          name='description'
-          content='An App For Eastern Orthodox Christians'
-        />
-        <link rel='icon' href='/favicon.ico' />
-        <link
-          rel='apple-touch-icon'
-          sizes='180x180'
-          href='/apple-touch-icon.png'
-        />
-        <link
-          rel='icon'
-          type='image/png'
-          sizes='32x32'
-          href='/favicon-32x32.png'
-        />
-        <link
-          rel='icon'
-          type='image/png'
-          sizes='16x16'
-          href='/favicon-16x16.png'
-        />
-        <link rel='manifest' href='/site.webmanifest' />
-      </Head>
       <main>
-        <h1>The Synaxis Holy Quotes App</h1>
-        <p>An App For Eastern Orthodox Christians</p>
-
         <div>
-          <h2>
+          <h1>
             {saint.title} {saint.name}
-          </h2>
+          </h1>
           <p>Feast: {saint.feastDay}</p>
           <img src='/images/services/allSaints.jpg' alt={`${saint.name}`} />
           <p>{saint.life}</p>
