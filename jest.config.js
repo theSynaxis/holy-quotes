@@ -3,5 +3,9 @@ module.exports = {
   collectCoverage: true,
   coverageDirectory: 'coverage',
   testEnvironment: 'jsdom',
-  setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
+  setupFilesAfterEnv: ['<rootDir>/.jest/setupTests.js'],
+  moduleNameMapper: {
+    '@/components(.*)$': '<rootDir>/src/components/$1',
+    '/^.+.{css|less|scss|sass}$/': '<rootDir>/.jest/style-mock.js',
+  },
 };

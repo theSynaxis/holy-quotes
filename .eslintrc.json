@@ -22,9 +22,9 @@
         "sourceType": "module"
     },
     "plugins": [
-        "react",
-        "prettier",
-        "jest"  
+      "react",
+      "prettier",
+      "jest"  
     ],
     "rules": {
       "jsx-quotes": ["error", "prefer-single"],
@@ -34,5 +34,19 @@
       "react/button-has-type": [0],
       "react/jsx-one-expression-per-line": [0],
       "prettier/prettier": "error"
+    },
+    "node": {
+      "moduleDirectory": ["node_modules", "src/"]
+    },
+    "settings": {
+      "import/resolver": {
+        "alias": {
+          "map": [
+            ["components", "./src/components"],
+            ["styles", "./src/styles"]
+          ],
+          "extensions": [".js", ".jsx", ".json", "scss", "css"]
+        }
+      }
     }
-}
+  }
