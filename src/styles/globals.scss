@@ -1,3 +1,15 @@
+@font-face {
+  font-family: 'TriodPostNaja';
+  src: url('/fonts/TriodPostNaja/TriodPostNaja-0G4z.ttf');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+h1 {
+  font-family: TriodPostNaja, serif;
+}
+
 html,
 body {
   padding: 0;

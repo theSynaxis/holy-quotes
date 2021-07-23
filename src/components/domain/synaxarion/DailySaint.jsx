@@ -1,4 +1,6 @@
 import React from 'react';
+import Image from 'next/image';
+import styles from '@/styles/Home.module.scss';
 
 const saint = {
   id: '1',
@@ -14,19 +16,21 @@ const saint = {
   isDeleted: false,
 };
 
-export default function Saint() {
+export default function DailySaint() {
   return (
-    <div>
-      <main>
-        <div>
-          <h1>
-            {saint.title} {saint.name}
-          </h1>
-          <p>Feast: {saint.feastDay}</p>
-          <img src='/images/services/allSaints.jpg' alt={`${saint.name}`} />
-          <p>{saint.life}</p>
-        </div>
-      </main>
+    <div className={styles.grid}>
+      <a href={`/saints/${saint.id}`} className={styles.card}>
+        <h2>
+          {saint.title} {saint.name}
+        </h2>
+        <p>Feast: {saint.feastDay}</p>
+        <Image
+          src='/images/services/allSaints.jpg'
+          alt={`${saint.name}`}
+          width={372}
+          height={366}
+        />
+      </a>
     </div>
   );
 }
