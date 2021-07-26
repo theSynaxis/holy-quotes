@@ -20,7 +20,8 @@ describe('Seed Tests', () => {
       expect(result[0].born).toEqual('1714');
       expect(result[0].died).toEqual('1779');
       expect(result[0].is_bc).toEqual(false);
-      expect(result[0].feast_day).toEqual('August 24');
+      expect(result[0].feast_date).toEqual(24);
+      expect(result[0].feast_month).toEqual(8);
       expect(result[0].life).toEqual(life);
       expect(moment(result[0].created_at).format('MMMM DD, YYYY')).toEqual(
         moment(timestamp).format('MMMM DD, YYYY')

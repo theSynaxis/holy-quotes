@@ -7,7 +7,8 @@ exports.up = function (knex) {
     tbl.string('born').notNullable();
     tbl.string('died').notNullable();
     tbl.boolean('is_bc').notNullable();
-    tbl.string('feast_day').notNullable();
+    tbl.integer('feast_date').notNullable();
+    tbl.integer('feast_month').notNullable();
     tbl.text('life').unique();
     tbl.timestamp('created_at').defaultTo(knex.fn.now());
     tbl.timestamp('modified_at').defaultTo(knex.fn.now());

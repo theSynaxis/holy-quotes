@@ -3,6 +3,7 @@ const {
   GraphQLID,
   GraphQLString,
   GraphQLBoolean,
+  GraphQLInt,
 } = require('graphql');
 const { GraphQLDateTime } = require('graphql-iso-date');
 
@@ -15,7 +16,8 @@ const AuthorType = new GraphQLObjectType({
     born: { type: GraphQLString },
     died: { type: GraphQLString },
     isBC: { type: GraphQLBoolean },
-    feastDay: { type: GraphQLString },
+    feastDate: { type: GraphQLInt },
+    feastMonth: { type: GraphQLInt },
     life: { type: GraphQLString },
     createdAt: { type: GraphQLDateTime },
     modifiedAt: { type: GraphQLDateTime },

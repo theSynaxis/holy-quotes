@@ -14,8 +14,11 @@ async function verifyAuthorInfo(author) {
   if (author.is_bc === (null || undefined)) {
     throw new Error('Missing Author BC Boolean');
   }
-  if (!author.feast_day) {
-    throw new Error('Missing Author Feast Day');
+  if (!author.feast_date) {
+    throw new Error('Missing Author Feast Date');
+  }
+  if (!author.feast_month) {
+    throw new Error('Missing Author Feast Month');
   }
   return author;
 }
@@ -30,7 +33,8 @@ function GqlToDBAuthorData(author) {
       born: author.born,
       died: author.died,
       is_bc: author.isBC,
-      feast_day: author.feastDay,
+      feast_date: author.feastDate,
+      feast_month: author.feastMonth,
       life: author.life,
       is_deleted: author.isDeleted,
       created_at: author.createdAt,
@@ -44,7 +48,8 @@ function GqlToDBAuthorData(author) {
     born: author.born,
     died: author.died,
     is_bc: author.isBC,
-    feast_day: author.feastDay,
+    feast_date: author.feastDate,
+    feast_month: author.feastMonth,
     life: author.life,
     is_deleted: author.isDeleted,
     created_at: author.createdAt,
@@ -61,7 +66,8 @@ function DBToGqlAuthorData(author) {
     born: author.born,
     died: author.died,
     isBC: author.is_bc,
-    feastDay: author.feast_day,
+    feastDate: author.feast_date,
+    feastMonth: author.feast_month,
     life: author.life,
     isDeleted: author.is_deleted,
     createdAt: author.created_at,

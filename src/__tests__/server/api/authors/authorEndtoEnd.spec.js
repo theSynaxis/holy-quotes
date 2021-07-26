@@ -35,7 +35,8 @@ describe('End to End Server API Tests: Authors', () => {
               born
               died
               isBC
-              feastDay
+              feastDate
+              feastMonth
               life
               createdAt
               modifiedAt
@@ -58,10 +59,11 @@ describe('End to End Server API Tests: Authors', () => {
           born: '25 July 1924',
           died: '12 July 1994',
           isBC: false,
-          feastDay: '12 July',
+          feastDate: 12,
+          feastMonth: 7,
         };
 
-        const variables = `name: "${author.name}", title: "${author.title}", born: "${author.born}", died: "${author.died}", isBC: ${author.isBC}, feastDay: "${author.feastDay}"`;
+        const variables = `name: "${author.name}", title: "${author.title}", born: "${author.born}", died: "${author.died}", isBC: ${author.isBC}, feastDate: ${author.feastDate}, feastMonth: ${author.feastMonth}`;
 
         const query = `
         mutation {
@@ -72,7 +74,8 @@ describe('End to End Server API Tests: Authors', () => {
             born
             died
             isBC
-            feastDay
+            feastDate
+            feastMonth
             life
             createdAt
             modifiedAt
@@ -89,7 +92,8 @@ describe('End to End Server API Tests: Authors', () => {
           born: '25 July 1924',
           died: '12 July 1994',
           isBC: false,
-          feastDay: '12 July',
+          feastDate: 12,
+          feastMonth: 7,
           life: null,
           createdAt: expect.any(String),
           modifiedAt: expect.any(String),
@@ -107,10 +111,11 @@ describe('End to End Server API Tests: Authors', () => {
           born: '25 July 1924',
           died: '12 July 1994',
           isBC: false,
-          feastDay: '12 July',
+          feastDate: 12,
+          feastMonth: 7,
         };
 
-        const variables = `title: "${author.title}", born: "${author.born}", died: "${author.died}", isBC: ${author.isBC}, feastDay: "${author.feastDay}"`;
+        const variables = `title: "${author.title}", born: "${author.born}", died: "${author.died}", isBC: ${author.isBC}, feastDate: ${author.feastDate}, feastMonth: ${author.feastMonth}`;
 
         const query = `mutation { addAuthor(${variables}) { id } }`;
 
@@ -127,10 +132,11 @@ describe('End to End Server API Tests: Authors', () => {
           born: '25 July 1924',
           died: '12 July 1994',
           isBC: false,
-          feastDay: '12 July',
+          feastDate: 12,
+          feastMonth: 7,
         };
 
-        const variables = `name: "${author.name}", born: "${author.born}", died: "${author.died}", isBC: ${author.isBC}, feastDay: "${author.feastDay}"`;
+        const variables = `name: "${author.name}", born: "${author.born}", died: "${author.died}", isBC: ${author.isBC}, feastDate: ${author.feastDate}, feastMonth: ${author.feastMonth}`;
 
         const query = `mutation { addAuthor(${variables}) { id } }`;
         const result = await request.post('/').send({ query: `${query}` });
@@ -146,10 +152,11 @@ describe('End to End Server API Tests: Authors', () => {
           title: 'Saint',
           died: '12 July 1994',
           isBC: false,
-          feastDay: '12 July',
+          feastDate: 12,
+          feastMonth: 7,
         };
 
-        const variables = `name: "${author.name}", title: "${author.title}", died: "${author.died}", isBC: ${author.isBC}, feastDay: "${author.feastDay}"`;
+        const variables = `name: "${author.name}", title: "${author.title}", died: "${author.died}", isBC: ${author.isBC}, feastDate: ${author.feastDate}, feastMonth: ${author.feastMonth}`;
 
         const query = `mutation { addAuthor(${variables}) { id } }`;
 
@@ -166,10 +173,11 @@ describe('End to End Server API Tests: Authors', () => {
           title: 'Saint',
           born: '25 July 1924',
           isBC: false,
-          feastDay: '12 July',
+          feastDate: 12,
+          feastMonth: 7,
         };
 
-        const variables = `name: "${author.name}", title: "${author.title}", born: "${author.born}", isBC: ${author.isBC}, feastDay: "${author.feastDay}"`;
+        const variables = `name: "${author.name}", title: "${author.title}", born: "${author.born}", isBC: ${author.isBC}, feastDate: ${author.feastDate}, feastMonth: ${author.feastMonth}`;
 
         const query = `mutation { addAuthor(${variables}) { id } }`;
 
@@ -186,10 +194,11 @@ describe('End to End Server API Tests: Authors', () => {
           title: 'Saint',
           born: '25 July 1924',
           died: '12 July 1994',
-          feastDay: '12 July',
+          feastDate: 12,
+          feastMonth: 7,
         };
 
-        const variables = `name: "${author.name}", title: "${author.title}", born: "${author.born}", died: "${author.died}", feastDay: "${author.feastDay}"`;
+        const variables = `name: "${author.name}", title: "${author.title}", born: "${author.born}", died: "${author.died}", feastDate: ${author.feastDate}, feastMonth: ${author.feastMonth}`;
 
         const query = `mutation { addAuthor(${variables}) { id } }`;
 
@@ -198,23 +207,45 @@ describe('End to End Server API Tests: Authors', () => {
         expect(errors[0].message).toEqual('Missing Author BC Boolean');
       });
 
-      test('Missing Feast Day', async () => {
+      test('Missing Feast Date', async () => {
         const author = {
           name: 'Paisios the Athonite',
           title: 'Saint',
           born: '25 July 1924',
           died: '12 July 1994',
           isBC: false,
+          feastMonth: 7,
         };
 
-        const variables = `name: "${author.name}", title: "${author.title}", born: "${author.born}", died: "${author.died}", isBC: ${author.isBC}`;
+        const variables = `name: "${author.name}", title: "${author.title}", born: "${author.born}", died: "${author.died}", isBC: ${author.isBC}, feastMonth: ${author.feastMonth}`;
 
         const query = `mutation { addAuthor(${variables}) { id } }`;
 
         const result = await request.post('/').send({ query: `${query}` });
         const { errors } = JSON.parse(result.text);
         expect(errors[0].message).toEqual(
-          'Field "addAuthor" argument "feastDay" of type "String!" is required, but it was not provided.'
+          'Field "addAuthor" argument "feastDate" of type "Int!" is required, but it was not provided.'
+        );
+      });
+
+      test('Missing Feast Month', async () => {
+        const author = {
+          name: 'Paisios the Athonite',
+          title: 'Saint',
+          born: '25 July 1924',
+          died: '12 July 1994',
+          isBC: false,
+          feastDate: 12,
+        };
+
+        const variables = `name: "${author.name}", title: "${author.title}", born: "${author.born}", died: "${author.died}", isBC: ${author.isBC}, feastDate: ${author.feastDate}`;
+
+        const query = `mutation { addAuthor(${variables}) { id } }`;
+
+        const result = await request.post('/').send({ query: `${query}` });
+        const { errors } = JSON.parse(result.text);
+        expect(errors[0].message).toEqual(
+          'Field "addAuthor" argument "feastMonth" of type "Int!" is required, but it was not provided.'
         );
       });
 
@@ -225,11 +256,12 @@ describe('End to End Server API Tests: Authors', () => {
           born: '25 July 1924',
           died: '12 July 1994',
           isBC: false,
-          feastDay: '12 July',
+          feastDate: 12,
+          feastMonth: 7,
           bestFriend: 'Moses the Fool',
         };
 
-        const variables = `name: "${author.name}", title: "${author.title}", born: "${author.born}", died: "${author.died}", isBC: ${author.isBC}, feastDay: "${author.feastDay}", bestFriend: "${author.bestFriend}"`;
+        const variables = `name: "${author.name}", title: "${author.title}", born: "${author.born}", died: "${author.died}", isBC: ${author.isBC}, feastDate: ${author.feastDate}, feastMonth: ${author.feastMonth}, bestFriend: "${author.bestFriend}"`;
 
         const query = `mutation { addAuthor(${variables}) { id } }`;
 
@@ -252,11 +284,12 @@ describe('End to End Server API Tests: Authors', () => {
           born: '25 July 1924',
           died: '12 July 1994',
           isBC: false,
-          feastDay: '12 July',
+          feastDate: 12,
+          feastMonth: 7,
           life: '',
         };
 
-        const variables = `id: ${author.id}, name: "${author.name}", title: "${author.title}", born: "${author.born}", died: "${author.died}", isBC: ${author.isBC}, feastDay: "${author.feastDay}", life: "${author.life}"`;
+        const variables = `id: ${author.id}, name: "${author.name}", title: "${author.title}", born: "${author.born}", died: "${author.died}", isBC: ${author.isBC}, feastDate: ${author.feastDate}, feastMonth: ${author.feastMonth}, life: "${author.life}"`;
 
         const query = `
         mutation {
@@ -267,7 +300,8 @@ describe('End to End Server API Tests: Authors', () => {
             born
             died
             isBC
-            feastDay
+            feastDate
+            feastMonth
             life
             createdAt
             modifiedAt
@@ -284,7 +318,8 @@ describe('End to End Server API Tests: Authors', () => {
           born: '25 July 1924',
           died: '12 July 1994',
           isBC: false,
-          feastDay: '12 July',
+          feastDate: 12,
+          feastMonth: 7,
           life: '',
           createdAt: expect.any(String),
           modifiedAt: expect.any(String),
@@ -302,10 +337,11 @@ describe('End to End Server API Tests: Authors', () => {
           born: '25 July 1924',
           died: '12 July 1994',
           isBC: false,
-          feastDay: '12 July',
+          feastDate: 12,
+          feastMonth: 7,
         };
 
-        const variables = `name: "${author.name}", title: "${author.title}", born: "${author.born}", died: "${author.died}", isBC: ${author.isBC}, feastDay: "${author.feastDay}"`;
+        const variables = `name: "${author.name}", title: "${author.title}", born: "${author.born}", died: "${author.died}", isBC: ${author.isBC}, feastDate: ${author.feastDate}, feastMonth: ${author.feastMonth}`;
 
         const query = `mutation { updateAuthor(${variables}) { id } }`;
 
@@ -323,10 +359,11 @@ describe('End to End Server API Tests: Authors', () => {
           born: '25 July 1924',
           died: '12 July 1994',
           isBC: false,
-          feastDay: '12 July',
+          feastDate: 12,
+          feastMonth: 7,
         };
 
-        const variables = `id: ${author.id}, title: "${author.title}", born: "${author.born}", died: "${author.died}", isBC: ${author.isBC}, feastDay: "${author.feastDay}"`;
+        const variables = `id: ${author.id}, title: "${author.title}", born: "${author.born}", died: "${author.died}", isBC: ${author.isBC}, feastDate: ${author.feastDate}, feastMonth: ${author.feastMonth}`;
 
         const query = `mutation { updateAuthor(${variables}) { id } }`;
 
@@ -344,10 +381,11 @@ describe('End to End Server API Tests: Authors', () => {
           born: '25 July 1924',
           died: '12 July 1994',
           isBC: false,
-          feastDay: '12 July',
+          feastDate: 12,
+          feastMonth: 7,
         };
 
-        const variables = `id: ${author.id}, name: "${author.name}", born: "${author.born}", died: "${author.died}", isBC: ${author.isBC}, feastDay: "${author.feastDay}"`;
+        const variables = `id: ${author.id}, name: "${author.name}", born: "${author.born}", died: "${author.died}", isBC: ${author.isBC}, feastDate: ${author.feastDate}, feastMonth: ${author.feastMonth}`;
 
         const query = `mutation { updateAuthor(${variables}) { id } }`;
 
@@ -365,10 +403,11 @@ describe('End to End Server API Tests: Authors', () => {
           title: 'Saint',
           died: '12 July 1994',
           isBC: false,
-          feastDay: '12 July',
+          feastDate: 12,
+          feastMonth: 7,
         };
 
-        const variables = `id: ${author.id}, name: "${author.name}", title: "${author.title}", died: "${author.died}", isBC: ${author.isBC}, feastDay: "${author.feastDay}"`;
+        const variables = `id: ${author.id}, name: "${author.name}", title: "${author.title}", died: "${author.died}", isBC: ${author.isBC}, feastDate: ${author.feastDate}, feastMonth: ${author.feastMonth}`;
 
         const query = `mutation { updateAuthor(${variables}) { id } }`;
 
@@ -387,10 +426,11 @@ describe('End to End Server API Tests: Authors', () => {
           born: '25 July 1924',
           died: '12 July 1994',
           isBC: false,
-          feastDay: '12 July',
+          feastDate: 12,
+          feastMonth: 7,
         };
 
-        const variables = `id: ${author.id}, name: "${author.name}", title: "${author.title}", born: "${author.born}", isBC: ${author.isBC}, feastDay: "${author.feastDay}"`;
+        const variables = `id: ${author.id}, name: "${author.name}", title: "${author.title}", born: "${author.born}", isBC: ${author.isBC}, feastDate: ${author.feastDate}, feastMonth: ${author.feastMonth}`;
 
         const query = `mutation { updateAuthor(${variables}) { id } }`;
 
@@ -408,10 +448,11 @@ describe('End to End Server API Tests: Authors', () => {
           title: 'Saint',
           born: '25 July 1924',
           died: '12 July 1994',
-          feastDay: '12 July',
+          feastDate: 12,
+          feastMonth: 7,
         };
 
-        const variables = `id: ${author.id}, name: "${author.name}", title: "${author.title}", born: "${author.born}", died: "${author.died}", feastDay: "${author.feastDay}"`;
+        const variables = `id: ${author.id}, name: "${author.name}", title: "${author.title}", born: "${author.born}", died: "${author.died}", feastDate: ${author.feastDate}, feastMonth: ${author.feastMonth}`;
 
         const query = `mutation { updateAuthor(${variables}) { id } }`;
 
@@ -422,7 +463,7 @@ describe('End to End Server API Tests: Authors', () => {
         );
       });
 
-      test('Missing Feast Day', async () => {
+      test('Missing Feast Date', async () => {
         const author = {
           id: 1,
           name: 'Paisios the Athonite',
@@ -430,16 +471,39 @@ describe('End to End Server API Tests: Authors', () => {
           born: '25 July 1924',
           died: '12 July 1994',
           isBC: false,
+          feastMonth: 7,
         };
 
-        const variables = `id: ${author.id}, name: "${author.name}", title: "${author.title}", born: "${author.born}", died: "${author.died}", isBC: ${author.isBC}`;
+        const variables = `id: ${author.id}, name: "${author.name}", title: "${author.title}", born: "${author.born}", died: "${author.died}", isBC: ${author.isBC}, feastMonth: ${author.feastMonth}`;
 
         const query = `mutation { updateAuthor(${variables}) { id } }`;
 
         const result = await request.post('/').send({ query: `${query}` });
         const { errors } = JSON.parse(result.text);
         expect(errors[0].message).toEqual(
-          'Field "updateAuthor" argument "feastDay" of type "String!" is required, but it was not provided.'
+          'Field "updateAuthor" argument "feastDate" of type "Int!" is required, but it was not provided.'
+        );
+      });
+
+      test('Missing Feast Month', async () => {
+        const author = {
+          id: 1,
+          name: 'Paisios the Athonite',
+          title: 'Saint',
+          born: '25 July 1924',
+          died: '12 July 1994',
+          isBC: false,
+          feastDate: 12,
+        };
+
+        const variables = `id: ${author.id}, name: "${author.name}", title: "${author.title}", born: "${author.born}", died: "${author.died}", isBC: ${author.isBC}, feastDate: ${author.feastDate}`;
+
+        const query = `mutation { updateAuthor(${variables}) { id } }`;
+
+        const result = await request.post('/').send({ query: `${query}` });
+        const { errors } = JSON.parse(result.text);
+        expect(errors[0].message).toEqual(
+          'Field "updateAuthor" argument "feastMonth" of type "Int!" is required, but it was not provided.'
         );
       });
 
@@ -451,11 +515,12 @@ describe('End to End Server API Tests: Authors', () => {
           born: '25 July 1924',
           died: '12 July 1994',
           isBC: false,
-          feastDay: '12 July',
+          feastDate: 12,
+          feastMonth: 7,
           bestFriend: 'Moses the Fool',
         };
 
-        const variables = `id: ${author.id}, name: "${author.name}", title: "${author.title}", born: "${author.born}", died: "${author.died}", isBC: ${author.isBC}, feastDay: "${author.feastDay}", bestFriend: "${author.bestFriend}"`;
+        const variables = `id: ${author.id}, name: "${author.name}", title: "${author.title}", born: "${author.born}", died: "${author.died}", isBC: ${author.isBC}, feastDate: ${author.feastDate}, feastMonth: ${author.feastMonth}, bestFriend: "${author.bestFriend}"`;
 
         const query = `mutation { updateAuthor(${variables}) { id } }`;
 
@@ -577,7 +642,8 @@ describe('End to End Server API Tests: Authors', () => {
             born
             died
             isBC
-            feastDay
+            feastDate
+            feastMonth
             life
             createdAt
             modifiedAt
@@ -593,7 +659,8 @@ describe('End to End Server API Tests: Authors', () => {
           born: '25 July 1924',
           died: '12 July 1994',
           isBC: false,
-          feastDay: '12 July',
+          feastDate: 12,
+          feastMonth: 7,
           life: '',
           createdAt: expect.any(String),
           modifiedAt: expect.any(String),
@@ -611,7 +678,8 @@ describe('End to End Server API Tests: Authors', () => {
             born
             died
             isBC
-            feastDay
+            feastDate
+            feastMonth
             life
             createdAt
             modifiedAt
@@ -639,10 +707,11 @@ describe('End to End Server API Tests: Authors', () => {
         born: '25 July 1924',
         died: '12 July 1994',
         isBC: false,
-        feastDay: '12 July',
+        feastDate: 12,
+        feastMonth: 7,
       };
 
-      const variables = `name: "${author.name}", title: "${author.title}", born: "${author.born}", died: "${author.died}", isBC: ${author.isBC}, feastDay: "${author.feastDay}"`;
+      const variables = `name: "${author.name}", title: "${author.title}", born: "${author.born}", died: "${author.died}", isBC: ${author.isBC}, feastDate: ${author.feastDate}, feastMonth: ${author.feastMonth}`;
 
       const query = `
         mutation {
@@ -653,7 +722,8 @@ describe('End to End Server API Tests: Authors', () => {
             born
             died
             isBC
-            feastDay
+            feastDate
+            feastMonth
             life
             createdAt
             modifiedAt
@@ -670,7 +740,8 @@ describe('End to End Server API Tests: Authors', () => {
         born: '25 July 1924',
         died: '12 July 1994',
         isBC: false,
-        feastDay: '12 July',
+        feastDate: 12,
+        feastMonth: 7,
         life: null,
         createdAt: expect.any(String),
         modifiedAt: expect.any(String),
@@ -688,11 +759,12 @@ describe('End to End Server API Tests: Authors', () => {
         born: '25 July 1924',
         died: '12 July 1994',
         isBC: false,
-        feastDay: '12 July',
+        feastDate: 12,
+        feastMonth: 7,
         life: `The New Hieromartyr Cosmas, Equal of the Apostles, in the world Constas, was a native of Aitolia. He studied at first under the guidance of the archdeacon Ananias Dervisanos, and afterwards continued his education on Mount Athos, at the Vatopedi school renowned for teachers such as Nicholas Tzartzoulios (from Metsovo) and Eugenius Voulgaris (afterwards in the years 1775-1779 the archbishop of Ekaterinoslav and the Chersonessus). Remaining on Athos at the Philotheou monastery to devote himself to spiritual labors, he was tonsured a monk with the name Cosmas, and later was ordained hieromonk. The desire to benefit his fellow Christians, to guide them upon the way of salvation and strengthen their faith, impelled Saint Cosmas to seek the blessing of his spiritual fathers and go to Constantinople. There he mastered the art of rhetoric and, having received a written permit of Patriarch Seraphim II (and later from his successor Sophronius) to preach the Holy Gospel. So the saint began to proclaim the Gospel at first in the churches of Constantinople and the surrounding villages, then in the Danube regions, in Thessalonica, in Verroia, in Macedonia, Chimaera, Akarnania, Aitolia, on the islands of Saint Maura, Kephalonia and other places. His preaching, filled with the grace of the Holy Spirit, was simple, calm, and gentle. It brought Christians great spiritual benefit. The Lord Himself assisted him and confirmed his words with signs and miracles, just as He had confirmed the preaching of the Apostles. Preaching in the remote areas of Albania, where Christian piety had almost disappeared among the rough and coarse people entrenched in sin, Saint Cosmas led them to sincere repentance and improvement with the Word of God. Under his guidance, church schools were opened in the towns and villages. The rich offered their money for the betterment of the churches, for the purchase of Holy Books (which the saint distributed to the literate), veils (which he gave women, admonishing them to come to church with covered heads),for prayer ropes and crosses (which he distributed to the common folk), and for baptismal fonts so that children could be baptized in the proper manner. Since the churches could not accommodate everyone wanting to hear the wise preacher, Saint Cosmas with forty or fifty priests served the Vigil in the fields, and in city squares, where thousands of people prayed for the living and for the dead, and were edified by his preaching. Everywhere that Saint Cosmas halted and preached, the grateful listeners set up a large wooden cross, which remained thereafter in memory of this. The apostolic service of Saint Cosmas was brought to a close by his martyric death in the year 1779. At 65 years of age, he was seized by the Turks and strangled. His body was thrown into a river, and after three days, was found by the priest Mark and buried near the village of Kolikontasi at the monastery of the Entrance into the Temple of the Most Holy Theotokos. Afterwards, part of his relics were transferred to various places as a blessing. He was glorified by the Ecumenical Patriarchate in 1961.`,
       };
 
-      const variables = `id: ${author.id}, name: "${author.name}", title: "${author.title}", born: "${author.born}", died: "${author.died}", isBC: ${author.isBC}, feastDay: "${author.feastDay}", life: "${author.life}"`;
+      const variables = `id: ${author.id}, name: "${author.name}", title: "${author.title}", born: "${author.born}", died: "${author.died}", isBC: ${author.isBC}, feastDate: ${author.feastDate}, feastMonth: ${author.feastMonth}, life: "${author.life}"`;
 
       const query = `
         mutation {
@@ -703,7 +775,8 @@ describe('End to End Server API Tests: Authors', () => {
             born
             died
             isBC
-            feastDay
+            feastDate
+            feastMonth
             life
             createdAt
             modifiedAt

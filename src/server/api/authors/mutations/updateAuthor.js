@@ -3,6 +3,7 @@ const {
   GraphQLID,
   GraphQLString,
   GraphQLBoolean,
+  GraphQLInt,
 } = require('graphql');
 const { AuthorType } = require('../../types');
 const { updateAuthor } = require('../authorsModel');
@@ -17,7 +18,8 @@ module.exports = {
     born: { type: new GraphQLNonNull(GraphQLString) },
     died: { type: new GraphQLNonNull(GraphQLString) },
     isBC: { type: new GraphQLNonNull(GraphQLBoolean) },
-    feastDay: { type: new GraphQLNonNull(GraphQLString) },
+    feastDate: { type: new GraphQLNonNull(GraphQLInt) },
+    feastMonth: { type: new GraphQLNonNull(GraphQLInt) },
     life: { type: new GraphQLNonNull(GraphQLString) },
   },
   resolve(parent, args) {

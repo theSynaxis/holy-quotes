@@ -38,7 +38,7 @@ async function getAuthor(id) {
 
 async function addAuthor(author) {
   let transformedAuthor = author;
-  if (author.feastDay) {
+  if (author.feastDate) {
     transformedAuthor = await GqlToDBAuthorData(author);
   }
   const verifiedAuthor = await verifyAuthorInfo(transformedAuthor);
@@ -62,7 +62,7 @@ async function updateAuthor(author) {
     throw new Error('Missing Author ID');
   }
   let transformedAuthor = author;
-  if (author.feastDay) {
+  if (author.feastDate) {
     transformedAuthor = await GqlToDBAuthorData(author);
   }
   const verifiedAuthor = await verifyAuthorInfo(transformedAuthor);

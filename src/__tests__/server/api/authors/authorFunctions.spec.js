@@ -13,7 +13,8 @@ describe('Author Business Logic Helper Functions', () => {
         born: '1689',
         died: '1569',
         is_bc: true,
-        feast_day: 'September 4',
+        feast_date: 4,
+        feast_month: 9,
       };
       const result = await verifyAuthorInfo(author);
       expect(result).toEqual(author);
@@ -26,7 +27,8 @@ describe('Author Business Logic Helper Functions', () => {
           born: '1689',
           died: '1569',
           is_bc: true,
-          feast_day: 'September 4',
+          feast_date: 4,
+          feast_month: 9,
         };
         await expect(() => verifyAuthorInfo(author)).rejects.toThrow(
           'Missing Author Name'
@@ -39,7 +41,8 @@ describe('Author Business Logic Helper Functions', () => {
           born: '1689',
           died: '1569',
           is_bc: true,
-          feast_day: 'September 4',
+          feast_date: 4,
+          feast_month: 9,
         };
         await expect(() => verifyAuthorInfo(author)).rejects.toThrow(
           'Missing Author Title'
@@ -52,7 +55,8 @@ describe('Author Business Logic Helper Functions', () => {
           title: 'Prophet',
           died: '1569',
           is_bc: true,
-          feast_day: 'September 4',
+          feast_date: 4,
+          feast_month: 9,
         };
         await expect(() => verifyAuthorInfo(author)).rejects.toThrow(
           'Missing Author Born Date'
@@ -65,7 +69,8 @@ describe('Author Business Logic Helper Functions', () => {
           title: 'Prophet',
           born: '1689',
           is_bc: true,
-          feast_day: 'September 4',
+          feast_date: 4,
+          feast_month: 9,
         };
         await expect(() => verifyAuthorInfo(author)).rejects.toThrow(
           'Missing Author Died Date'
@@ -78,23 +83,39 @@ describe('Author Business Logic Helper Functions', () => {
           title: 'Prophet',
           born: '1689',
           died: '1569',
-          feast_day: 'September 4',
+          feast_date: 4,
+          feast_month: 9,
         };
         await expect(() => verifyAuthorInfo(author)).rejects.toThrow(
           'Missing Author BC Boolean'
         );
       });
 
-      test('verifyAuthorInfo: Missing Author Feast Day', async () => {
+      test('verifyAuthorInfo: Missing Author Feast Date', async () => {
         const author = {
           name: 'Moses the Godseer',
           title: 'Prophet',
           born: '1689',
           died: '1569',
           is_bc: true,
+          feast_month: 9,
         };
         await expect(() => verifyAuthorInfo(author)).rejects.toThrow(
-          'Missing Author Feast Day'
+          'Missing Author Feast Date'
+        );
+      });
+
+      test('verifyAuthorInfo: Missing Author Feast Month', async () => {
+        const author = {
+          name: 'Moses the Godseer',
+          title: 'Prophet',
+          born: '1689',
+          died: '1569',
+          is_bc: true,
+          feast_date: 4,
+        };
+        await expect(() => verifyAuthorInfo(author)).rejects.toThrow(
+          'Missing Author Feast Month'
         );
       });
     });
@@ -108,7 +129,8 @@ describe('Author Business Logic Helper Functions', () => {
         born: 'Born',
         died: 'Died',
         isBC: true,
-        feastDay: 'Feast Day',
+        feast_date: 4,
+        feast_month: 9,
         isDeleted: false,
         createdAt: new Date(Date.now()),
         modifiedAt: new Date(Date.now()),
@@ -134,7 +156,8 @@ describe('Author Business Logic Helper Functions', () => {
         born: 'Born',
         died: 'Died',
         isBC: true,
-        feastDay: 'Feast Day',
+        feastDate: 4,
+        feastMonth: 9,
         isDeleted: false,
         createdAt: new Date(Date.now()),
         modifiedAt: new Date(Date.now()),
@@ -160,7 +183,8 @@ describe('Author Business Logic Helper Functions', () => {
         born: 'Born',
         died: 'Died',
         is_bc: true,
-        feast_day: 'Feast Day',
+        feast_date: 4,
+        feast_month: 9,
         is_deleted: false,
         created_at: new Date(Date.now()),
         modified_at: new Date(Date.now()),

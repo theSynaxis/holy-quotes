@@ -52,7 +52,8 @@ describe('Data Access Model Layer', () => {
         born: '1689',
         died: '1569',
         is_bc: true,
-        feast_day: 'September 4',
+        feast_date: 4,
+        feast_month: 9,
       };
       const author = await addOne('authors', newAuthor);
       expect(author.id).toEqual(2);

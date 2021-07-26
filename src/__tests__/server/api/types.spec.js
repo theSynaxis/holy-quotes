@@ -1,4 +1,9 @@
-const { GraphQLID, GraphQLString, GraphQLBoolean } = require('graphql');
+const {
+  GraphQLID,
+  GraphQLString,
+  GraphQLBoolean,
+  GraphQLInt,
+} = require('graphql');
 const { GraphQLDateTime } = require('graphql-iso-date');
 const { AuthorType } = require('../../../server/api/types');
 
@@ -13,7 +18,8 @@ describe('GraphQL Types', () => {
       expect(fields.born.type).toEqual(GraphQLString);
       expect(fields.died.type).toEqual(GraphQLString);
       expect(fields.isBC.type).toEqual(GraphQLBoolean);
-      expect(fields.feastDay.type).toEqual(GraphQLString);
+      expect(fields.feastDate.type).toEqual(GraphQLInt);
+      expect(fields.feastMonth.type).toEqual(GraphQLInt);
       expect(fields.life.type).toEqual(GraphQLString);
       expect(fields.createdAt.type).toEqual(GraphQLDateTime);
       expect(fields.modifiedAt.type).toEqual(GraphQLDateTime);
